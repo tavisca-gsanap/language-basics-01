@@ -20,77 +20,49 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             Console.WriteLine($"{args} : {result}");
         }
 
-        private static string strcmp(string c, string d)
-        {
-            int j = 0;
-            string ans = "";
-            char[] a = c.ToCharArray();
-            char[] b = d.ToCharArray();
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (a[i] != b[i])
-                {
-                    j++;
-                    if (a[i] == '?')
-                    {
-                        ans = b[i] + "";
-                    }
-                    else
-                    {
-                        ans = a[i] + "";
-                    }
-                }
-            }
-            if (j != 1)
-            {
-                ans = "-1";
-            }
-            return ans;
-        }
-
         public static int FindDigit(string equation)
         {
             // Add your code here.
-            string[] a = equation.Split('=');
-            string[] b = a[0].Split('*');
-            string[] num = { b[0], b[1], a[1] };
-            string op = "";
+            string[] numbers = equation.Split('*','=');
+            string outputDigit = "";
+            int actualAnswerOfExpression;
+            StringCompare stringCompare = new StringCompare();
             //for equation like 4?*47=1974
-            if (num[0].Contains("?"))
+            if (numbers[0].Contains("?"))
             {
                 try
                 {
-                    int ans = int.Parse(int.Parse(num[2]) / double.Parse(num[1]) + "");
-                    op = strcmp(ans + "", num[0]);
+                    actualAnswerOfExpression = Int32.Parse(Int32.Parse(numbers[2]) / Double.Parse(numbers[1]) + "");
+                    outputDigit = stringCompare.StringComparer(actualAnswerOfExpression + "", numbers[0]);
                 }
                 catch (Exception e)
                 {
-                    op = "-1";
+                    outputDigit = "-1";
                 }
 
             }
             //for equation like 42*?7=1974
-            else if (num[1].Contains("?"))
+            else if (numbers[1].Contains("?"))
             {
                 try
                 {
-                    int ans = int.Parse(int.Parse(num[2]) / double.Parse(num[0]) + "");
-                    op = strcmp(ans + "", num[1]);
+                    actualAnswerOfExpression = Int32.Parse(Int32.Parse(numbers[2]) / Double.Parse(numbers[0]) + "");
+                    outputDigit = stringCompare.StringComparer(actualAnswerOfExpression + "", numbers[1]);
                 }
                 catch (Exception e)
                 {
-                    op = "-1";
+                    outputDigit = "-1";
                 }
             }
             //for equation like 42*47=1?74
             else
             {
-                int ans = int.Parse(num[0]) * int.Parse(num[1]);
-                op = strcmp(ans + "", num[2]);
+                actualAnswerOfExpression = Int32.Parse(numbers[0]) * Int32.Parse(numbers[1]);
+                outputDigit = stringCompare.StringComparer(actualAnswerOfExpression + "", numbers[2]);
             }
 
-            Console.WriteLine(op);
-            return int.Parse(op);
+            Console.WriteLine(outputDigit);
+            return Int32.Parse(outputDigit);
             //throw new NotImplementedException();
 
         }
